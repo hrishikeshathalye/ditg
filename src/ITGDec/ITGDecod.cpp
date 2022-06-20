@@ -557,10 +557,10 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	size = 1;
-	while (size > 0) {
+	::size = 1;
+	while (::size > 0) {
 		infos = readline(&inbin, intxt, logintype);
-		if (size > 0) { 
+		if (::size > 0) { 
 			mark();
 			if (flagreconstruct) {
 				struct info *send_info = found((*infos).flowId, (*infos).srcAddr, (*infos).destAddr, (*infos).srcPort,
@@ -584,7 +584,6 @@ int main(int argc, char *argv[])
 			if (flaglogout)
 				writeline(logouttype);
 			if (flagoctave) {
-				fprintf(octavefpout, "%7u ", (*infos).flowId);
 				fprintf(octavefpout, "%7u ", (*infos).seqNum);
 				fprintf(octavefpout, "%u %u %lf ", (*infos).txTime1, (*infos).txTime2, (*infos).txTime3);
 				fprintf(octavefpout, "%u %u %lf ", (*infos).rxTime1, (*infos).rxTime2, (*infos).rxTime3);
@@ -968,7 +967,7 @@ struct info *readline(ifstream *fbin, FILE *ftxt, int filetype)
 	if (filetype == 0) {
 		
 		
-		size = fread(infos_loc, sizeof(struct info), 1, ftxt); 
+		::size = fread(infos_loc, sizeof(struct info), 1, ftxt); 
 		
 		
 		
@@ -999,12 +998,12 @@ struct info *readline(ifstream *fbin, FILE *ftxt, int filetype)
 			fscanf(ftxt, "Size>%5u\n", &(*infos_loc).size);
 			if ((*infos_loc).flowId == 0) {
 				printf("\n Error reading input file\n");
-				size = 0;
+				::size = 0;
 			} else {
-				size = 1;
+				::size = 1;
 			}
 		} else
-			size = 0;
+			::size = 0;
 	}
 	return infos_loc;
 }
@@ -1310,9 +1309,9 @@ void elabsplit(int flagbit, int flagjit, int flagdel, int flagpkt)
 				PRINTD(1,"Prima di leggere le info dal file %s con puntantore %p\n",
 					memFile[i].FileName, inputfilec);
 
-				size = fread(infos, sizeof(struct info), 1, inputfilec); 
+				::size = fread(infos, sizeof(struct info), 1, inputfilec); 
 				PRINTD(1,"Info lette dal file %s\n", memFile[i].FileName);
-				if (size == 0) {
+				if (::size == 0) {
 					if (flagbit)
 						fprintf(outfilebit, "%lf %lf\n", intclosedbit * (double) msbitrate / 1000, tempbitrate * 8
 							/ msbitrate);
